@@ -16,7 +16,7 @@ var supportedCmds = map[string]cli.CliFunc{
 	"zone":          cli.Zone,
 	"dircache":      cli.DirCache,
 	"listbucket":    cli.ListBucket,
-	"alilistbucket": cli.AliListBucket,
+//	"alilistbucket": cli.AliListBucket,
 	"prefop":        cli.Prefop,
 	"stat":          cli.Stat,
 	"delete":        cli.Delete,
@@ -58,6 +58,7 @@ var supportedCmds = map[string]cli.CliFunc{
 	"m3u8delete":    cli.M3u8Delete,
 	"buckets":       cli.GetBuckets,
 	"domains":       cli.GetDomainsOfBucket,
+	"pfop" : 		 cli.Pfop,
 }
 
 func main() {

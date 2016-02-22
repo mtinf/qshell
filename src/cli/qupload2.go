@@ -3,7 +3,7 @@ package cli
 import (
 	"flag"
 	"fmt"
-	"github.com/qiniu/log"
+	"qiniu/log"
 	"os"
 	"qshell"
 )
