@@ -139,7 +139,7 @@ func ResumablePut(cmd string, params ...string) {
 			}
 
 			//upload setting config
-			if strings.HasPrefix(strings.ToLower(param), "chunksize") {
+			if strings.HasPrefix(strings.ToLower(param), "c=") {
 				chunkSize, err := strconv.Atoi(strings.Split(param, "=")[1])
 				if err != nil {
 					chunkSize = 256 * 1024
