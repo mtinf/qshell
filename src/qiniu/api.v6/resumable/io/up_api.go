@@ -60,22 +60,21 @@ func NewClient(token string, bindRemoteIp string) rpc.Client {
 // ----------------------------------------------------------
 
 func Mkblock(
-	c rpc.Client, l rpc.Logger, ret *BlkputRet, blockSize int, body io.Reader, size int) error {
-
-	return c.CallWith(l, ret, UP_HOST+"/mkblk/"+strconv.Itoa(blockSize), "application/octet-stream", body, size)
+c rpc.Client, l rpc.Logger, ret *BlkputRet, blockSize int, body io.Reader, size int) error {
+	return c.CallWith(l, ret, UP_HOST + "/mkblk/" + strconv.Itoa(blockSize), "application/octet-stream", body, size)
 }
 
 func Blockput(
-	c rpc.Client, l rpc.Logger, ret *BlkputRet, body io.Reader, size int) error {
+c rpc.Client, l rpc.Logger, ret *BlkputRet, body io.Reader, size int) error {
 
-	url := ret.Host + "/bput/" + ret.Ctx + "/" + strconv.FormatUint(uint64(ret.Offset), 10)
+	url := UP_HOST + "/bput/" + ret.Ctx + "/" + strconv.FormatUint(uint64(ret.Offset), 10)
 	return c.CallWith(l, ret, url, "application/octet-stream", body, size)
 }
 
 // ----------------------------------------------------------
 
 func ResumableBlockput(
-	c rpc.Client, l rpc.Logger, ret *BlkputRet, f io.ReaderAt, blkIdx, blkSize int, extra *PutExtra) (err error) {
+c rpc.Client, l rpc.Logger, ret *BlkputRet, f io.ReaderAt, blkIdx, blkSize int, extra *PutExtra) (err error) {
 
 	h := crc32.NewIEEE()
 	offbase := int64(blkIdx) << blockBits
@@ -107,7 +106,7 @@ func ResumableBlockput(
 
 	for int(ret.Offset) < blkSize {
 
-		if chunkSize < blkSize-int(ret.Offset) {
+		if chunkSize < blkSize - int(ret.Offset) {
 			bodyLength = chunkSize
 		} else {
 			bodyLength = blkSize - int(ret.Offset)
@@ -115,9 +114,9 @@ func ResumableBlockput(
 
 		tryTimes := extra.TryTimes
 
-	lzRetry:
+		lzRetry:
 		h.Reset()
-		body1 := io.NewSectionReader(f, offbase+int64(ret.Offset), int64(bodyLength))
+		body1 := io.NewSectionReader(f, offbase + int64(ret.Offset), int64(bodyLength))
 		body := io.TeeReader(body1, h)
 
 		err = Blockput(c, l, ret, body, bodyLength)
@@ -149,7 +148,7 @@ func ResumableBlockput(
 // ----------------------------------------------------------
 
 func Mkfile(
-	c rpc.Client, l rpc.Logger, ret interface{}, key string, hasKey bool, fsize int64, extra *PutExtra) (err error) {
+c rpc.Client, l rpc.Logger, ret interface{}, key string, hasKey bool, fsize int64, extra *PutExtra) (err error) {
 
 	url := UP_HOST + "/mkfile/" + strconv.FormatInt(fsize, 10)
 
@@ -163,13 +162,13 @@ func Mkfile(
 		url += fmt.Sprintf("/%s/%s", k, encode(v))
 	}
 
-	buf := make([]byte, 0, 176*len(extra.Progresses))
+	buf := make([]byte, 0, 176 * len(extra.Progresses))
 	for _, prog := range extra.Progresses {
 		buf = append(buf, prog.Ctx...)
 		buf = append(buf, ',')
 	}
 	if len(buf) > 0 {
-		buf = buf[:len(buf)-1]
+		buf = buf[:len(buf) - 1]
 	}
 
 	return c.CallWith(l, ret, url, "application/octet-stream", bytes.NewReader(buf), len(buf))
