@@ -59,6 +59,8 @@ var supportedCmds = map[string]cli.CliFunc{
 	"buckets":       cli.GetBuckets,
 	"domains":       cli.GetDomainsOfBucket,
 	"pfop" : 		 cli.Pfop,
+	"gtoken" :		 cli.GenerateToken,
+	"ptoken" :		 cli.ParseToken,
 }
 
 func main() {
