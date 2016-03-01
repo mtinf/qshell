@@ -61,6 +61,8 @@ var cmds = []string{
 	"buckets",
 	"domains",
 	"pfop",
+	"gtoken",
+	"ptoken",
 }
 var cmdDocs = map[string][]string{
 	"account":       []string{"qshell [-d] account [<AccessKey> <SecretKey>] [<Zone>]", "Get/Set AccessKey and SecretKey and Zone"},
@@ -109,6 +111,8 @@ var cmdDocs = map[string][]string{
 	"buckets":       []string{"qshell [-d] buckets", "Get all buckets of the account"},
 	"domains":       []string{"qshell [-d] domains <Bucket>", "Get all domains of the bucket"},
 	"pfop":			 []string{"qshell [-d] pfop <Bucket> <Key> <fops> [<nofifyURL>] [<force>] [<Host>]", "async file process"},
+	"gtoken":		 []string{"qshell [-d] gtoken <Bucket> <Key> [<time>]", "generate token"},
+	"ptoken":		 []string{"qshell [-d] ptoken <token>", "parse token"},
 }
 
 func Version() {
