@@ -75,7 +75,7 @@ type FopResult struct {
 
 func (this *RSFop) Prefop(persistentId, host string, fopRet *FopRet) (err error) {
 	client := rpc.DefaultClient
-	resp, respErr := client.Get(nil, fmt.Sprintf("%s/pfop/status?id=%s", host, persistentId))
+	resp, respErr := client.Get(nil, fmt.Sprintf("%s/status/get/prefop?id=%s", host, persistentId))
 	if respErr != nil {
 		err = respErr
 		return
