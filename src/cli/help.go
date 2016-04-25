@@ -110,9 +110,9 @@ var cmdDocs = map[string][]string{
 	"m3u8delete":    []string{"qshell [-d] m3u8delete <Bucket> <M3u8Key> [<IsPrivate>]", "Delete m3u8 playlist and the slices it references"},
 	"buckets":       []string{"qshell [-d] buckets", "Get all buckets of the account"},
 	"domains":       []string{"qshell [-d] domains <Bucket>", "Get all domains of the bucket"},
-	"pfop":			 []string{"qshell [-d] pfop <Bucket> <Key> <fops> [<nofifyURL>] [<force>] [<Host>]", "async file process"},
-	"gtoken":		 []string{"qshell [-d] gtoken <Bucket> <Key> [<time>]", "generate token"},
-	"ptoken":		 []string{"qshell [-d] ptoken <token>", "parse token"},
+	"pfop":		 []string{"qshell [-d] pfop <Bucket> <Key> <fops> [<nofifyURL>] [<force>] [<Host>]", "async file process"},
+	"gtoken":	 []string{"qshell [-d] gtoken <Bucket> <Key> [<time>]", "generate token"},
+	"ptoken":	 []string{"qshell [-d] ptoken <token>", "parse token"},
 }
 
 func Version() {
