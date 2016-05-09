@@ -113,6 +113,7 @@ var cmdDocs = map[string][]string{
 	"pfop":		 []string{"qshell [-d] pfop <Bucket> <Key> <fops> [<nofifyURL>] [<force>] [<Host>]", "async file process"},
 	"gtoken":	 []string{"qshell [-d] gtoken <Bucket> <Key> [<time>]", "generate token"},
 	"ptoken":	 []string{"qshell [-d] ptoken <token>", "parse token"},
+	"fopcancel":	 []string{"qshell fopcancel <PersistentId> <host>", "cancel fop process"},
 }
 
 func Version() {

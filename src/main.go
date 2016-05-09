@@ -58,9 +58,10 @@ var supportedCmds = map[string]cli.CliFunc{
 	"m3u8delete":    cli.M3u8Delete,
 	"buckets":       cli.GetBuckets,
 	"domains":       cli.GetDomainsOfBucket,
-	"pfop" : 		 cli.Pfop,
-	"gtoken" :		 cli.GenerateToken,
-	"ptoken" :		 cli.ParseToken,
+	"pfop" : 	 cli.Pfop,
+	"gtoken" :	 cli.GenerateToken,
+	"ptoken" :	 cli.ParseToken,
+	"fopcancel" :	 cli.FopCancel,
 }
 
 func main() {

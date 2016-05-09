@@ -11,14 +11,18 @@ type RSFop struct {
 }
 
 type FopRet struct {
-	Id          string `json:"id"`
-	Code        int    `json:"code"`
-	Desc        string `json:"desc"`
-	InputBucket string `json:"inputBucket,omitempty"`
-	InputKey    string `json:"inputKey,omitempty"`
-	Pipeline    string `json:"pipeline,omitempty"`
-	Reqid       string `json:"reqid,omitempty"`
-	Items       []FopResult
+	Id             string `json:"id"`
+	Code           int    `json:"code"`
+	Desc           string `json:"desc"`
+	InputBucket    string `json:"inputBucket,omitempty"`
+	InputKey       string `json:"inputKey,omitempty"`
+	Pipeline       string `json:"pipeline,omitempty"`
+	Reqid          string `json:"reqid,omitempty"`
+	Retry          int    `json:"retry,omitempty"`
+	LastModifyTime string `json:"lastModifyTime"`
+	Error          string `json:"error"`
+	Cancel         bool `json:"cancel"`
+	Items          []FopResult
 }
 
 func (this *FopRet) String() string {
@@ -35,7 +39,18 @@ func (this *FopRet) String() string {
 	if this.Reqid != "" {
 		strData += fmt.Sprintln(fmt.Sprintf("Reqid: %s", this.Reqid))
 	}
-
+	if this.Retry > 0 {
+		strData += fmt.Sprintln(fmt.Sprintf("Retry: %d", this.Retry))
+	}
+	if this.LastModifyTime != "" {
+		strData += fmt.Sprintln(fmt.Sprintf("LastModifyTime: %s", this.LastModifyTime))
+	}
+	if this.Error != "" {
+		strData += fmt.Sprintln(fmt.Sprintf("Error: %s", this.Error))
+	}
+	if this.Cancel {
+		strData += fmt.Sprintln(fmt.Sprintf("Cancel: %t", this.Cancel))
+	}
 	strData = fmt.Sprintln(strData)
 	for _, item := range this.Items {
 		strData += fmt.Sprintf("\tCmd:\t%s\r\n\tCode:\t%d\r\n\tDesc:\t%s\r\n", item.Cmd, item.Code, item.Desc)
@@ -81,7 +96,7 @@ func (this *RSFop) Prefop(persistentId, host string, fopRet *FopRet) (err error)
 		return
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode/100 == 2 {
+	if resp.StatusCode / 100 == 2 {
 		if fopRet != nil && resp.ContentLength != 0 {
 			pErr := json.NewDecoder(resp.Body).Decode(fopRet)
 			if pErr != nil {

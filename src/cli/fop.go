@@ -12,6 +12,7 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"io/ioutil"
+	"encoding/json"
 )
 
 func Prefop(cmd string, params ...string) {
@@ -65,6 +66,30 @@ func Pfop(cmd string, params ...string) {
 		resp, _ := client.Do(r)
 		result, _ := ioutil.ReadAll(resp.Body)
 		fmt.Println(string(result))
+	} else {
+		CmdHelp(cmd)
+	}
+}
+
+func FopCancel(cmd string, params ...string) {
+	if len(params) == 2 {
+		persistentId := params[0]
+		host := params[1]
+
+		client := rpc.DefaultClient
+		resp, err := client.Get(nil, fmt.Sprintf("%s/status/cancel/prefop?id=%s", host, persistentId))
+		if (err != nil && resp.StatusCode != 200) {
+			fmt.Printf("cancel pfop error, persistentId: %s,statusCode: %d, %+v\n", persistentId, resp.StatusCode, err)
+			return
+		}
+		defer resp.Body.Close()
+
+		result, _ := ioutil.ReadAll(resp.Body)
+
+		fopRet := qshell.FopRet{}
+		json.Unmarshal(result, &fopRet);
+
+		fmt.Println(fopRet.String())
 	} else {
 		CmdHelp(cmd)
 	}
