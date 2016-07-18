@@ -52,9 +52,9 @@ func (this *FopRet) String() string {
 	if this.Cancel {
 		strData += fmt.Sprintln(fmt.Sprintf("Cancel: %t", this.Cancel))
 	}
-	if this.IsTimeThreshold {
-		strData += fmt.Sprintln(fmt.Sprintf("IsTimeThreshold: %t", this.Cancel))
-	}
+	//if this.IsTimeThreshold {
+	//	strData += fmt.Sprintln(fmt.Sprintf("IsTimeThreshold: %t", this.IsTimeThreshold))
+	//}
 	strData = fmt.Sprintln(strData)
 	for _, item := range this.Items {
 		strData += fmt.Sprintf("\tCmd:\t%s\r\n\tCode:\t%d\r\n\tDesc:\t%s\r\n", item.Cmd, item.Code, item.Desc)
