@@ -11,18 +11,19 @@ type RSFop struct {
 }
 
 type FopRet struct {
-	Id             string `json:"id"`
-	Code           int    `json:"code"`
-	Desc           string `json:"desc"`
-	InputBucket    string `json:"inputBucket,omitempty"`
-	InputKey       string `json:"inputKey,omitempty"`
-	Pipeline       string `json:"pipeline,omitempty"`
-	Reqid          string `json:"reqid,omitempty"`
-	Retry          int    `json:"retry,omitempty"`
-	LastModifyTime string `json:"lastModifyTime"`
-	Error          string `json:"error"`
-	Cancel         bool `json:"cancel"`
-	Items          []FopResult
+	Id              string `json:"id"`
+	Code            int    `json:"code"`
+	Desc            string `json:"desc"`
+	InputBucket     string `json:"inputBucket,omitempty"`
+	InputKey        string `json:"inputKey,omitempty"`
+	Pipeline        string `json:"pipeline,omitempty"`
+	Reqid           string `json:"reqid,omitempty"`
+	Retry           int    `json:"retry,omitempty"`
+	LastModifyTime  string `json:"lastModifyTime"`
+	Error           string `json:"error"`
+	Cancel          bool `json:"cancel"`
+	IsTimeThreshold bool `json:"timeThreshold"`
+	Items           []FopResult
 }
 
 func (this *FopRet) String() string {
@@ -50,6 +51,9 @@ func (this *FopRet) String() string {
 	}
 	if this.Cancel {
 		strData += fmt.Sprintln(fmt.Sprintf("Cancel: %t", this.Cancel))
+	}
+	if this.IsTimeThreshold {
+		strData += fmt.Sprintln(fmt.Sprintf("IsTimeThreshold: %t", this.Cancel))
 	}
 	strData = fmt.Sprintln(strData)
 	for _, item := range this.Items {

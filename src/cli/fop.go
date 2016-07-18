@@ -55,7 +55,8 @@ func Pfop(cmd string, params ...string) {
 		sign := h.Sum(nil)
 		encodedSign := base64.URLEncoding.EncodeToString(sign)
 		authorization := "QBox " + mac.AccessKey + ":" + string(encodedSign)
-
+		fmt.Println("authorization: ", authorization)
+		fmt.Println("bodyStr", bodyStr)
 		client := &http.Client{}
 		r, err := http.NewRequest("POST", fmt.Sprintf("%s/pfop", host), bytes.NewBufferString(bodyStr))
 		if (err != nil) {
