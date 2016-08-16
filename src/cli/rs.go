@@ -987,6 +987,38 @@ func Saveas(cmd string, params ...string) {
 	}
 }
 
+func MpSaveas(cmd string, params ...string) {
+	if len(params) == 8 {
+		sn := params[0]
+		wm := params[1]
+		ss := params[2]
+		picBucket := params[3]
+		picKey := params[4]
+		videoBucket := params[5]
+		videoKey := params[6]
+		hostWithBucketKey := params[7]
+
+		gErr := accountS.Get()
+		if gErr != nil {
+			fmt.Println(gErr)
+			return
+		}
+
+		mac := digest.Mac{
+			accountS.AccessKey,
+			[]byte(accountS.SecretKey),
+		}
+		url, err := qshell.MpSaveas(&mac, sn, wm, ss, picBucket, picKey, videoBucket, videoKey, hostWithBucketKey)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(url)
+		}
+	} else {
+		CmdHelp(cmd)
+	}
+}
+
 func M3u8Delete(cmd string, params ...string) {
 	if len(params) == 2 || len(params) == 3 {
 		bucket := params[0]

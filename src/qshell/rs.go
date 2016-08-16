@@ -109,6 +109,18 @@ func Saveas(mac *digest.Mac, publicUrl string, saveBucket string, saveKey string
 	return publicUrl + "|saveas/" + encodedSaveEntry + "/sign/" + mac.AccessKey + ":" + encodedSign, nil
 }
 
+func MpSaveas(mac *digest.Mac, sn, wm, ss, picBucket, picKey, videoBucket, videoKey, hostWithBucketKey string) (string, error) {
+	snEncode := base64.URLEncoding.EncodeToString([]byte(sn))
+	picSaveas := base64.URLEncoding.EncodeToString([]byte(picBucket + ":" + picKey))
+	videoSaveas := base64.URLEncoding.EncodeToString([]byte(videoBucket + ":" + videoKey))
+	baseUrl := fmt.Sprintf("%s?mp/sn/%s/wm/%s/ss/%s/pic/%s/video/%s", strings.TrimLeft(hostWithBucketKey, "http://"), snEncode, wm, ss, picSaveas, videoSaveas)
+	h := hmac.New(sha1.New, mac.SecretKey)
+	h.Write([]byte(baseUrl))
+	sign := h.Sum(nil)
+	encodedSign := base64.URLEncoding.EncodeToString(sign)
+	return "http://" + baseUrl + "/sign/" + mac.AccessKey + ":" + encodedSign, nil
+}
+
 func BatchStat(client rs.Client, entries []rs.EntryPath) (ret []BatchItemRet, err error) {
 	b := make([]string, len(entries))
 	for i, e := range entries {

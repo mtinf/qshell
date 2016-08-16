@@ -54,6 +54,7 @@ var supportedCmds = map[string]cli.CliFunc{
 	"unzip":         cli.Unzip,
 	"privateurl":    cli.PrivateUrl,
 	"saveas":        cli.Saveas,
+	"mpsaveas":      cli.MpSaveas,
 	"reqid":         cli.ReqId,
 	"m3u8delete":    cli.M3u8Delete,
 	"buckets":       cli.GetBuckets,
